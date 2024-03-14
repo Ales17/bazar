@@ -1,0 +1,24 @@
+<%- include('partials/header') %> <% if (!offers) { %> V databázi nejsou žádné
+nabídky <% } else { %>
+<div class="offers">
+  <% offers.forEach(e => { %>
+
+  <div class="offer-wrapper part">
+    <a href="/offer/<%= e.id %>"> <%= e.title %> </a>
+    <p><%= e.text %></p>
+    <p>
+      Cena: <%= e.price %> <br />
+      Autor: <%= e.author.name %> <br />
+      E-mail: <%= e.author.email %> <br />
+      Telefon: <a href="tel:<%= e.author.phone %>"><%= e.author.phone %></a>
+    </p>
+
+    <% if (locals.user && (e.author._id == locals.user.id)) { %>
+    <a href="/offer/<%= e.id %>/edit">Upravit</a>
+    <a href="/offer/<%= e.id %>/delete">Smazat</a>
+    <% } %>
+  </div>
+
+  <% }) %>
+</div>
+<% } %> <%- include('partials/footer') %>

@@ -1,0 +1,29 @@
+<%- include('partials/header') %>
+<div class="part">
+  Jméno a příjmení: <%= user.name %> <br />
+  E-mail: <%= user.email %> <br />
+  Telefon: <%= user.phone %>
+</div>
+
+<% if (offers) { %>
+<div class="part"><h2>Vaše nabídky (včetně soukromých)</h2></div>
+
+<div class="offers">
+  <% offers.forEach(e => { %>
+  <div class="offer-wrapper part">
+    <a href="/offer/<%= e.id %>"> <%= e.title %> </a>
+    <p>
+      <%= e.title %> <br />
+      <%= e.text %> <br />
+      <%= e.price %> <br />
+
+      <% if (e.public) { %> Veřejný <% } else { %> <u>Soukromý</u> <% } %>
+      inzerát <br />
+    </p>
+    <a href="/offer/<%= e.id %>/edit">Upravit</a>
+    <a href="/offer/<%= e.id %>/delete">Smazat</a>
+  </div>
+  <% }) %>
+</div>
+
+<% } else { %> Nemáte žádné nabídky <% } %> <%- include('partials/footer') %>

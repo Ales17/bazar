@@ -1,0 +1,17 @@
+<%- include('partials/header') %>
+<div class="offer-wrapper part">
+  <a href="/offer/<%= offer.id %>"> <%= offer.title %> </a>
+  <p>
+    <%= offer.text %> <br />
+    <%= offer.price %> <br />
+    <%= offer.author.name %> <br />
+    <%= offer.author.email %> <br />
+    <%= offer.author.phone %>
+  </p>
+  <% if (locals.user && (offer.author._id == locals.user.id)) { %>
+  <p><%= offer.public %></p>
+  <a href="/offer/<%= offer.id %>/edit">Upravit</a>
+  <a href="/offer/<%= offer.id %>/delete">Smazat</a>
+  <% } %>
+</div>
+<%- include('partials/footer') %>

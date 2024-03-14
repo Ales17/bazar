@@ -1,0 +1,25 @@
+<%- include('partials/header') %>
+<form action="/offer/<%= offer.id %>/edit" method="post">
+  <input type="hidden" name="id" value="<%= offer.id %>" />
+
+  <label for="title">Titulek</label> <br />
+  <input type="text" name="title" value="<%= offer.title %>" /> <br />
+  <label for="text">Text</label> <br />
+  <textarea name="text" cols="30" rows="10"><%= offer.text %></textarea> <br />
+
+  <label for="public">Stav inzerátu</label> <br />
+  <select name="public">
+    <option value="false" <% if (!offer.public) { %>
+      selected <% } %>>Soukromý
+    </option>
+    <option value="true" <% if(offer.public) { %>
+      selected <% } %>>Veřejný
+    </option>
+  </select> <br>
+
+  <label for="price">Cena</label> <br />
+  <input type="text" name="price" value="<%= offer.price %>" /> <br />
+  
+  <input type="submit" value="Uložit změny" />
+</form>
+<%- include('partials/footer') %>

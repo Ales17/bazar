@@ -1,0 +1,21 @@
+<%- include('partials/header') %>
+<form action="/offer/create" method="post" class="part">
+  <!-- offer/create -->
+  <label for="title">Titulek</label>
+  <input type="text" name="title" id="" />
+
+  <label for="text">Text</label>
+  <textarea name="text" cols="30" rows="10"></textarea>
+
+  <label for="public">Viditelnost</label>
+  <select name="public">
+    <option value="false">Soukromý</option>
+    <option value="true">Veřejný</option>
+  </select>
+
+  <label for="price">Cena</label>
+  <input type="text" name="price" />
+
+  <input type="submit" value="Vytvořit" />
+</form>
+<%- include('partials/footer') %>
