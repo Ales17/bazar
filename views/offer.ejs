@@ -8,8 +8,9 @@
     <%= offer.author.email %> <br />
     <%= offer.author.phone %>
   </p>
-  <% if (locals.user && (offer.author._id == locals.user.id)) { %>
-  <p><%= offer.public %></p>
+  <% if (locals.user && (offer.author._id == locals.user.id)) { %> <% if
+  (offer.public) { %> Veřejný <% } else { %> <u>Soukromý</u> <% } %> inzerát
+  <br />
   <a href="/offer/<%= offer.id %>/edit">Upravit</a>
   <a href="/offer/<%= offer.id %>/delete">Smazat</a>
   <% } %>
