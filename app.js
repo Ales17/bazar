@@ -8,7 +8,7 @@ const { middleware } = require("./controllers/user");
 const path = require("path");
 
 mongoose
-  .connect("mongodb://127.0.0.1:27017/bazar")
+  .connect("mongodb://127.0.0.1:27017/tnpw_ales")
   .catch((error) => console.error("Chyba při připojení k databázi", error));
 
 const db = mongoose.connection;

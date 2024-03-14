@@ -9,7 +9,6 @@ const authTokens = {};
 middleware = (req, res, next) => {
   const authToken = req.cookies["tkn"];
   req.user = authTokens[authToken];
-  res.set("X-AB-APP", authToken)
   next();
 };
 
