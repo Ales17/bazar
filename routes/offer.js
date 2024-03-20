@@ -18,6 +18,6 @@ router.get("/:id/edit", [authenticate, editOfferPage]);
 // CRUD
 router.post("/create", [authenticate, createOffer]);
 router.get("/:id/delete", [authenticate, deleteOfferById]);
-router.post("/:id/edit", [authenticate, editOffer]);
+router.patch("/:id/edit", [authenticate, editOffer]);
 
 module.exports = router;

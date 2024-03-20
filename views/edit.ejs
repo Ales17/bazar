@@ -1,5 +1,5 @@
 <%- include('partials/header') %>
-<form action="/offer/<%= offer.id %>/edit" method="post" class="part">
+<form action="/offer/<%= offer.id %>/edit?_method=PATCH" method="post" class="part">
   <input type="hidden" name="id" value="<%= offer.id %>" />
 
   <label for="title">Titulek</label>
