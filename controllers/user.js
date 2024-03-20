@@ -12,11 +12,11 @@ middleware = (req, res, next) => {
   next();
 };
 
-requireLogin = (req, res, next) => {
+authenticate = (req, res, next) => {
   if (req.user) {
     return next();
   } else {
-    res.status(403).render("login", { message: "Pro pokračování se, prosím, přihlaste." });
+    res.status(403).render("login", { message: "Nejste přihlášeni." });
   }
 };
 
@@ -116,5 +116,5 @@ module.exports = {
   userPage,
   registerPage,
   middleware,
-  requireLogin
+  authenticate
 };

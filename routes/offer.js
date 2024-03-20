@@ -3,25 +3,21 @@ const router = express.Router();
 
 const {
   createOffer,
-  getOfferByAuthor,
   offerPage,
   createOfferPage,
-  getOfferByIdJson,
   deleteOfferById,
   editOfferPage,
   editOffer,
 } = require("../controllers/offer");
-const { requireLogin } = require("../controllers/user");
+const { authenticate } = require("../controllers/user");
 
 // Pages
-router.get("/create", [requireLogin, createOfferPage]);
+router.get("/create", [authenticate, createOfferPage]);
 router.get("/:id", offerPage);
-router.get("/:id/edit", [requireLogin, editOfferPage])
-router.post("/:id/edit", [requireLogin, editOffer]);
+router.get("/:id/edit", [authenticate, editOfferPage]);
 // CRUD
-router.post("/create", [requireLogin, createOffer]);
-router.get("/author/:author", [requireLogin, getOfferByAuthor]);
-// router.get("/api/:id", getOfferByIdJson);
-router.get("/:id/delete", [requireLogin, deleteOfferById]);
+router.post("/create", [authenticate, createOffer]);
+router.get("/:id/delete", [authenticate, deleteOfferById]);
+router.post("/:id/edit", [authenticate, editOffer]);
 
 module.exports = router;
