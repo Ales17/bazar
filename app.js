@@ -33,11 +33,6 @@ app.use("/offer/", require("./routes/offer"));
 app.use("/user/", require("./routes/user"));
 app.use("/", require("./routes/home"));
 
-// debug test
-app.post("*", (req, res) => {
-  res.send(req.body);
-});
-
 app.get("*", (req, res) => {
   res.status(404).render("message", {
     message: "Tato strana nebyla nalezena.",
