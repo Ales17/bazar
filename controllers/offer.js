@@ -4,8 +4,16 @@ const user = require("../models/user");
 const { render } = require("ejs");
 
 // Util
-const getOfferByID = async (id) => {
-  return await Offer.findById(id).populate("author", "name phone email");
+const getOfferByID = async (offerId) => {
+  try {
+    const offer = await Offer.findOne({ _id: offerId }).populate(
+      "author",
+      "name phone email"
+    );
+    return offer;
+  } catch (error) {
+    return null;
+  }
 };
 
 const getOffersByAuthorJson = async (id) => {
@@ -18,8 +26,18 @@ const getOffersByAuthorJson = async (id) => {
 // Pages
 offerPage = async (req, res) => {
   const offer = await getOfferByID(req.params.id);
+
   const user = req.user;
-  res.render("offer", { offer, user, title: "Detail nabídky" });
+  if (!offer) {
+    res
+      .status(404)
+      .render("message", {
+        message: "Inzerát s tímto číslem nenalezen.",
+        user,
+      });
+  } else {
+    res.render("offer", { offer, user, title: "Detail nabídky" });
+  }
 };
 
 editOfferPage = async (req, res) => {
@@ -33,7 +51,7 @@ createOfferPage = (req, res) => {
 };
 // CRUD
 createOffer = async (req, res) => {
-/*   if (!req.user) {
+  /*   if (!req.user) {
     res.status(401).send("Nejste přihlášeni");
     return;
   } */
@@ -55,7 +73,6 @@ createOffer = async (req, res) => {
 };
 
 editOffer = async (req, res) => {
-
   const { title, text, id, price, public } = req.body;
   const offer = await Offer.findByIdAndUpdate(
     id,

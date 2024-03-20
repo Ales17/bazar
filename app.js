@@ -39,7 +39,9 @@ app.post("*", (req, res) => {
 });
 
 app.get("*", (req, res) => {
-  res.status(404).render("error", { message: "Tato strana nebyla nalezena" });
+  res.status(404).render("message", {
+    message: "Tato strana nebyla nalezena.",
+  });
 });
 
 app.listen(PORT, () => {
