@@ -1,7 +1,6 @@
 const express = require("express");
 const Offer = require("../models/offer");
 const user = require("../models/user");
-const { render } = require("ejs");
 
 // Util
 const getOfferByID = async (offerId) => {
@@ -29,12 +28,10 @@ offerPage = async (req, res) => {
 
   const user = req.user;
   if (!offer) {
-    res
-      .status(404)
-      .render("message", {
-        message: "Inzerát s tímto číslem nenalezen.",
-        user,
-      });
+    res.status(404).render("message", {
+      message: "Inzerát s tímto číslem nenalezen.",
+      user,
+    });
   } else {
     res.render("offer", { offer, user, title: "Detail nabídky" });
   }
@@ -42,7 +39,22 @@ offerPage = async (req, res) => {
 
 editOfferPage = async (req, res) => {
   const offer = await getOfferByID(req.params.id);
-  res.render("edit", { offer, title: "Upravit nabídku" });
+
+  if (!offer) {
+    res.status(404).render("message", {
+      message: "Inzerát s tímto číslem nenalezen.",
+      user,
+    });
+  } else {
+    if (!req.user._id.equals(offer.author._id)) {
+      res.status(401).render("message", {
+        message: "Nemáte oprávnění upravovat tento inzerát.",
+        user,
+      });
+    } else {
+      res.render("edit", { offer, title: "Upravit inzerát" });
+    }
+  }
 };
 
 createOfferPage = (req, res) => {
@@ -51,10 +63,7 @@ createOfferPage = (req, res) => {
 };
 // CRUD
 createOffer = async (req, res) => {
-  /*   if (!req.user) {
-    res.status(401).send("Nejste přihlášeni");
-    return;
-  } */
+
   const user = req.user;
   const { title, text, price, public } = req.body;
   console.log(req.body);
@@ -95,7 +104,6 @@ getOfferByAuthor = async (req, res) => {
 
 deleteOfferById = async (req, res) => {
   await Offer.findByIdAndDelete(req.params.id);
-  //res.send('DELETED. <a href="/">Go home</a>');
   res.redirect("/");
 };
 
