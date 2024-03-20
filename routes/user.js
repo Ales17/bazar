@@ -20,6 +20,4 @@ router.get("/logout", logoutUser);
 router.post("/register", createUser);
 router.post("/login", login);
 
-router.get("/:author/offers", getOfferByAuthor);
-
 module.exports = router;

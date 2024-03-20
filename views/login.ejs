@@ -1,11 +1,11 @@
-<%- include('partials/header') %> 
+<%- include('partials/header') %>
 <form action="/user/login" method="POST" class="part">
-  <label for="username">Uživatelské jméno:</label> 
-  <input type="text" id="username" name="username" required /> 
+  <label for="username">Uživatelské jméno:</label>
+  <input type="text" id="username" name="username" autofocus required />
 
-  <label for="password">Heslo:</label> 
+  <label for="password">Heslo:</label>
   <input type="password" id="password" name="password" required />
 
   <input type="submit" value="Přihlásit se" />
 </form>
-<%- include('partials/footer') %> 
+<%- include('partials/footer') %>

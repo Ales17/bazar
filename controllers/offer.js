@@ -2,6 +2,8 @@ const express = require("express");
 const Offer = require("../models/offer");
 const user = require("../models/user");
 
+const offer401msg = "Nemáte oprávnění upravovat tento inzerát";
+
 // Util
 const getOfferByID = async (offerId) => {
   try {
@@ -48,7 +50,7 @@ editOfferPage = async (req, res) => {
   } else {
     if (!req.user._id.equals(offer.author._id)) {
       res.status(401).render("message", {
-        message: "Nemáte oprávnění upravovat tento inzerát.",
+        message: offer401msg,
         user,
       });
     } else {
@@ -63,7 +65,6 @@ createOfferPage = (req, res) => {
 };
 // CRUD
 createOffer = async (req, res) => {
-
   const user = req.user;
   const { title, text, price, public } = req.body;
   console.log(req.body);
@@ -83,18 +84,31 @@ createOffer = async (req, res) => {
 
 editOffer = async (req, res) => {
   const { title, text, id, price, public } = req.body;
-  const offer = await Offer.findByIdAndUpdate(
-    id,
-    {
-      title: title,
-      text: text,
-      price: price,
-      public: public,
-    },
-    { new: true }
-  );
+  const user = req.user;
 
-  res.render("offer", { offer, message: "Změny v nabídce byly uloženy." });
+  const offerToUpdate = await Offer.findById(id);
+  if (!offerToUpdate.author._id.equals(user._id)) {
+    res.status(401).render("message", {
+      message: offer401msg,
+      user,
+    });
+  } else {
+    const offer = await Offer.findByIdAndUpdate(
+      id,
+      {
+        title: title,
+        text: text,
+        price: price,
+        public: public,
+      },
+      { new: true } // Return UPDATED, not original doc.
+    );
+    res.render("offer", {
+      offer,
+      message: "Změny inzerátu byly uloženy",
+      user,
+    });
+  }
 };
 
 getOfferByAuthor = async (req, res) => {
