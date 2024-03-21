@@ -1,11 +1,10 @@
-const express = require("express");
 const User = require("../models/user");
 const crypto = require("crypto");
 const { getOffersByAuthorJson } = require("./offer");
+const bcrypt = require("bcryptjs");
 
 const authTokens = {};
 
-// Auth middleware
 middleware = (req, res, next) => {
   const authToken = req.cookies["tkn"];
   req.user = authTokens[authToken];
@@ -20,46 +19,18 @@ authenticate = (req, res, next) => {
   }
 };
 
-const getHashedPassword = (password) => {
-  const sha256 = crypto.createHash("sha256");
-  const hash = sha256.update(password).digest("base64");
-  return hash;
-};
-
+// Util
 const generateAuthToken = () => {
   return crypto.randomBytes(40).toString("hex");
 };
 
-createUser = async (req, res) => {
-  const { username, name, email, password, password2, phone } = req.body;
-
-  // Check if the user already exists
-  const user = await User.findOne({ username });
-  if (user) {
-    res.status(400).render("register", {
-      message: "Uživatel s tímto jménem již existuje.",
-    });
-    return;
-  } else if (password !== password2) {
-    res.status(400).render("register", { message: "Hesla se neshodují" });
-    return
-  }
-
-  const hashedPassword = getHashedPassword(password);
-
-  const newUser = new User({
+const findUserByUsername = async (username) => {
+  return await User.findOne({
     username,
-    name,
-    email,
-    hashedPassword,
-    phone,
-  });
-  await newUser.save();
-  res.status(201).render("login", {
-    message: "Děkujeme za registraci. Nyní se můžete přihlásit.",
   });
 };
 
+// GET - pages
 loginPage = (req, res) => {
   res.render("login");
 };
@@ -78,32 +49,64 @@ registerPage = (req, res) => {
   res.render("register");
 };
 
+// POST
+createUser = async (req, res) => {
+  const { username, name, email, password, password2, phone } = req.body;
+
+  // Check if the user already exists
+  const user = await findUserByUsername(username);
+  if (user) {
+    res
+      .status(400)
+      .render("register", { message: "Uživatel s tímto jménem již existuje." });
+    return;
+  } else if (password !== password2) {
+    res.status(400).render("register", { message: "Hesla se neshodují" });
+    return;
+  }
+
+  var hashedPassword = bcrypt.hashSync(password, 10);
+
+  const newUser = new User({
+    username,
+    name,
+    email,
+    hashedPassword,
+    phone,
+  });
+  await newUser.save();
+  res.status(201).render("login", {
+    message: "Děkujeme za registraci. Nyní se můžete přihlásit.",
+  });
+};
+
 login = async (req, res) => {
   const { username, password } = req.body;
-  const user = await User.findOne({
-    username,
-    hashedPassword: getHashedPassword(password),
-  });
+
+  const user = await findUserByUsername(username);
+
   if (user) {
-    const authToken = generateAuthToken();
-    // Store authentication token
-    authTokens[authToken] = user;
+    const compare = bcrypt.compareSync(password, user.hashedPassword);
+    
+    if (compare) {
+      const authToken = generateAuthToken();
+      // Store authentication token
+      authTokens[authToken] = user;
 
-    // Setting the auth token in cookies
-    res.cookie("tkn", authToken);
+      res.cookie("tkn", authToken, { httpOnly: true });
 
-    //res.send(user.id);
-    res.redirect("/");
+      res.redirect("/");
+    } else {
+      res.render("login", { message: "Zadali jste nesprávné heslo." });
+    }
   } else {
-    res.render("login", {
-      message: "Nesprávné přihlašovací údaje",
-      messageClass: "alert-danger",
-    });
+    res.render("login", { message: "Uživatel s tímto jménem neexistuje." });
   }
 };
 
 logoutUser = (req, res) => {
   const authToken = req.cookies["tkn"];
+  res.clearCookie("tkn");
   delete authTokens[authToken];
   res.redirect("/");
 };
@@ -116,5 +119,5 @@ module.exports = {
   userPage,
   registerPage,
   middleware,
-  authenticate
+  authenticate,
 };
