@@ -5,8 +5,8 @@ nabídky <% } else { %>
 
   <div class="offer-wrapper part">
     <a href="/offer/<%= e.id %>"> <%= e.title %> </a>
-    <p><%= e.text %></p>
     <p>
+      <%= e.text %> <br />
       Cena: <%= e.price %> <br />
       Autor: <%= e.author.name %> <br />
       E-mail: <%= e.author.email %> <br />
@@ -14,11 +14,13 @@ nabídky <% } else { %>
     </p>
 
     <% if (locals.user && (e.author._id == locals.user.id)) { %>
-    <a href="/offer/<%= e.id %>/edit">Upravit</a>
-    <a href="/offer/<%= e.id %>/delete">Smazat</a>
+    <div class="offer-buttons">
+      <a href="/offer/<%= e.id %>/edit">Upravit</a>
+      <a href="/offer/<%= e.id %>/delete">Smazat</a>
+    </div>
     <% } %>
   </div>
 
-  <% }) %>
+  <% }) %> <% } %>
 </div>
-<% } %> <%- include('partials/footer') %>
+<%- include('partials/footer') %>

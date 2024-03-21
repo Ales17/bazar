@@ -119,6 +119,19 @@ nav ul li:hover {
     flex-direction: column;
 }
 
+.offer-buttons {
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+}
+
+.offer-buttons a {
+    padding: 5px;
+    border: 1px solid;
+    border-radius: 10px;
+    text-decoration: none;
+}
+
 @media screen and (min-width: 768px) {
     nav ul {
         flex-direction: row;
@@ -130,5 +143,9 @@ nav ul li:hover {
         padding-left: 20vw;
         padding-right: 20vw;
 
+    }
+
+    .offers {
+        grid-template-columns: 1fr 1fr;
     }
 }
