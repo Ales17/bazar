@@ -2,8 +2,9 @@ const express = require("express");
 const app = express();
 const cookieParser = require("cookie-parser");
 const path = require("path");
-const { middleware } = require("./controllers/user");
 
+const { middleware } = require("./controllers/user");
+const methodOverride = require("method-override");
 // Config
 const PORT = process.env.PORT || 3000;
 
@@ -18,7 +19,8 @@ db.once("open", () => {
 });
 
 // Utils
-app.disable('x-powered-by');
+app.use(methodOverride("_method"));
+app.disable("x-powered-by");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
