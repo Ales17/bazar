@@ -1,6 +1,13 @@
-### Databáze
+## Bazar
 
-c:\mongodb\bin\mongod.exe --dbpath=c:\mongodb-data
+### How to Seed the Database?  
+- Execute `node seed.js`.
+
+### Getting Started
+- In the first terminal, run `npm run db`.
+- In the second terminal, run either `npm run dev` or `npm start`.
+
+For the `npm run db` command to work properly, ensure that MongoDB is installed and configured at **c:\mongodb\bin\mongod.exe** with the database path set to **c:\mongodb-data**.
 
 ### Požadavky
 
