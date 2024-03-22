@@ -114,15 +114,27 @@ nav ul li:hover {
     gap: 10px
 }
 
+/* One offer */
 .offer-wrapper {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
 }
 
 .offer-buttons {
     display: flex;
     gap: 5px;
     justify-content: center;
+    padding-top: 10px;
+}
+
+.offer-title {
+    font-size: 1.3rem;
+}
+
+.offer-contact {
+    display: flex;
+    flex-direction: column;
 }
 
 .offer-buttons a {

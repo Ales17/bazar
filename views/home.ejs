@@ -4,23 +4,26 @@ nabídky <% } else { %>
   <% offers.forEach(e => { %>
 
   <div class="offer-wrapper part">
-    <a href="/offer/<%= e.id %>"> <%= e.title %> </a>
-    <p>
-      <%= e.text %> <br />
-      Cena: <%= e.price %> <br />
-      Autor: <%= e.author.name %> <br />
-      E-mail: <%= e.author.email %> <br />
-      Telefon: <a href="tel:<%= e.author.phone %>"><%= e.author.phone %></a>
-    </p>
-
-    <% if (locals.user && (e.author._id == locals.user.id)) { %>
-    <div class="offer-buttons">
-      <a href="/offer/<%= e.id %>/edit">Upravit</a>
-      <a href="/offer/<%= e.id %>/delete">Smazat</a>
+    <div>
+      <a class="offer-title" href="/offer/<%= e.id %>"> <%= e.title %> </a>
+      <p><%= e.text %></p>
     </div>
-    <% } %>
-  </div>
+    <div class="offer-details">
+      <b>Cena:</b> <%= e.price %> Kč<br />
+      <b>Autor:</b> <%= e.author.name %> <br />
+      <b>E-mail:</b> <%= e.author.email %> <br />
+      <b>Telefon:</b>
+      <a href="tel:<%= e.author.phone %>"><%= e.author.phone %></a>
 
+      <div class="offer-buttons">
+        <a href="/offer/<%= e.id %>">Detail</a>
+        <% if (locals.user && (e.author._id == locals.user.id)) { %>
+        <a href="/offer/<%= e.id %>/edit">Upravit</a>
+        <a href="/offer/<%= e.id %>/delete">Smazat</a>
+        <% } %>
+      </div>
+    </div>
+  </div>
   <% }) %> <% } %>
 </div>
 <%- include('partials/footer') %>
