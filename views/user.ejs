@@ -12,18 +12,31 @@
   <div class="offers">
     <% offers.forEach(e => { %>
     <div class="offer-wrapper">
-      <a href="/offer/<%= e.id %>"> <%= e.title %> </a>
-      <p>
-        <%= e.title %> <br />
-        <%= e.text %> <br />
-        <%= e.price %> <br />
+      <div>
+        <a class="offer-title" href="/offer/<%= e.id %>"> <%= e.title %> </a>
+        <p><%= e.text %></p>
+      </div>
+      <div class="offer-details">
+        <b>Cena:</b> <%= e.price %> Kč <br>
+        <b>Autor:</b> <%= e.author.name %> <br />
+        <b>E-mail:</b> <%= e.author.email %> <br />
+        <b>Telefon:</b>
+        <a href="tel:<%= e.author.phone %>"><%= e.author.phone %></a> <br>
+        <b>Viditelnost:</b> <span title="Toto vidíte pouze vy" style="cursor: help;"> <% if
+        (e.public) { %> veřejný <% } else { %> soukromý <% } %></span> 
+        <div class="offer-buttons">
+          <% if (locals.user && (e.author._id == locals.user.id)) { %>
+          <a href="/offer/<%= e.id %>/edit">Upravit</a>
+          <a href="/offer/<%= e.id %>/delete">Smazat</a>
+          <% } %>
+        </div>
+      </div>
 
-        Inzerát je <% if (e.public) { %>  VEŘEJNÝ <% } else { %> <u>SOUKROMÝ</u> <% } %>
-        .<br />
-      </p>
-      <a href="/offer/<%= e.id %>/edit">Upravit</a>
-      <a href="/offer/<%= e.id %>/delete">Smazat</a>
-    </div>
+
+
+
+
+  </div>
     <% }) %>
   </div>
 </div> 
