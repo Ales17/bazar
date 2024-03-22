@@ -18,8 +18,8 @@
         <%= e.text %> <br />
         <%= e.price %> <br />
 
-        <% if (e.public) { %> Veřejný <% } else { %> <u>Soukromý</u> <% } %>
-        inzerát <br />
+        Inzerát je <% if (e.public) { %>  VEŘEJNÝ <% } else { %> <u>SOUKROMÝ</u> <% } %>
+        .<br />
       </p>
       <a href="/offer/<%= e.id %>/edit">Upravit</a>
       <a href="/offer/<%= e.id %>/delete">Smazat</a>

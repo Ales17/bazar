@@ -15,7 +15,9 @@
           <li><a href="/">Domů</a></li>
           <% if (locals.user) { %>
           <li><a href="/offer/create">Nový inzerát</a></li>
-          <li><a href="/user">Můj účet (<%= locals.user.name %>)</a></li>
+          <li>
+            <a href="/user">Můj účet (<i><%= locals.user.name %></i>)</a>
+          </li>
           <li><a href="/user/logout">Odhlásit se</a></li>
           <% } else { %>
           <li><a href="/user/login">Přihlásit se</a></li>

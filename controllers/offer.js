@@ -17,15 +17,13 @@ const getOfferByID = async (offerId) => {
 };
 
 const getOffersByAuthor = async (id) => {
-  try {
-    const offers = await Offer.findOne({ author: id }).populate(
-      "author",
-      "name phone email"
-    );
-    return offers;
-  } catch (error) {
+  const offers = await Offer.find({ author: id })
+    .populate("author", "name phone email")
+    .exec();
+  if (offers.length == 0) {
     return null;
   }
+  return offers;
 };
 
 // Pages

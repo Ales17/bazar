@@ -1,7 +1,7 @@
 ## Bazar
 
 ### How to Seed the Database?  
-- Execute `node seed.js`.
+- Run DB using `npm run db`, in another terminal `node seed.js`.
 
 ### Getting Started
 - In the first terminal, run `npm run db`.

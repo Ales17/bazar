@@ -50,17 +50,17 @@ nav ul {
 }
 
 nav ul li {
-    padding: 5px;
     background-color: var(--glass);
     box-shadow: var(--shadow);
     border-radius: 10px;
 }
 
 nav ul li a {
+    padding: 10px;
     display: block;
     color: #000;
     text-decoration: none;
-
+    text-align: center;
 }
 
 /* Inserted page */
