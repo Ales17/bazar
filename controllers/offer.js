@@ -70,8 +70,6 @@ createOfferPage = (req, res) => {
 createOffer = async (req, res) => {
   const user = req.user;
   const { title, text, price, public } = req.body;
-  console.log(req.body);
-  console.log(public);
   const offerToSave = new Offer({
     title,
     text,
@@ -81,7 +79,6 @@ createOffer = async (req, res) => {
     created: new Date(),
   });
   const offer = await offerToSave.save();
-  //res.status(201).send(offer);
   res.status(201).redirect(`/offer/${offer.id}`);
 };
 
@@ -105,7 +102,7 @@ editOffer = async (req, res) => {
         public: public,
       },
       { new: true } // Return UPDATED, not original doc.
-    );
+    ).populate("author", "name phone email");
     res.render("offer", {
       offer,
       message: "Změny inzerátu byly uloženy",
