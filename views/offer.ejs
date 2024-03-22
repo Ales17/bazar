@@ -1,18 +1,24 @@
 <%- include('partials/header') %>
 <div class="offer-wrapper part">
-  <a href="/offer/<%= offer.id %>"> <%= offer.title %> </a>
-  <p>
-    <%= offer.text %> <br />
-    <%= offer.price %> <br />
-    <%= offer.author.name %> <br />
-    <%= offer.author.email %> <br />
-    <%= offer.author.phone %>
-  </p>
-  <% if (locals.user && (offer.author._id == locals.user.id)) { %> <% if
-  (offer.public) { %> Veřejný <% } else { %> <u>Soukromý</u> <% } %> inzerát
-  <br />
-  <a href="/offer/<%= offer.id %>/edit">Upravit</a>
-  <a href="/offer/<%= offer.id %>/delete">Smazat</a>
-  <% } %>
+  <div>
+    <a class="offer-title" href="/offer/<%= offer.id %>"> <%= offer.title %> </a>
+    <p><%= offer.text %></p>
+  </div>
+  <div class="offer-details">
+      <b>Cena:</b> <%= offer.price %> Kč <br>
+      <b>Autor:</b> <%= offer.author.name %> <br />
+      <b>E-mail:</b> <%= offer.author.email %> <br />
+      <b>Telefon:</b>
+      <a href="tel:<%= offer.author.phone %>"><%= offer.author.phone %></a> <br>
+      <b>Viditelnost:</b> <span title="Toto vidíte pouze vy" style="cursor: help;"> <% if
+      (offer.public) { %> veřejný <% } else { %> soukromý <% } %></span> 
+      <div class="offer-buttons">
+        <% if (locals.user && (offer.author._id == locals.user.id)) { %>
+        <a href="/offer/<%= offer.id %>/edit">Upravit</a>
+        <a href="/offer/<%= offer.id %>/delete">Smazat</a>
+        <% } %>
+      </div>
+    </div>
+  </div>
 </div>
 <%- include('partials/footer') %>
