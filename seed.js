@@ -35,6 +35,14 @@ let offers = [
     public: true,
     author: "65f36572e2c4516182b9f872",
   },
+  {
+    _id: "65fd2a1a22a9472d00ca8f84",
+    title: "Robot Bosch",
+    text: "Daruji robot Bosch, stáří asi 20 let.",
+    price: 0,
+    public: true,
+    author: "65fd29f522a9472d00ca8f7f",
+  },
 ];
 
 let users = [
@@ -42,17 +50,28 @@ let users = [
     _id: "65f364e2e2c4516182b9f863",
     name: "Jana Nováková",
     username: "jana",
-    hashedPassword: "$2a$10$L/SDur8H/zScErTPU6kCD.vRy2lHF4vIdeVqHm7jEIcmFUvIuGiJu",
-    phone: "777777777",
+    hashedPassword:
+      "$2a$10$L/SDur8H/zScErTPU6kCD.vRy2lHF4vIdeVqHm7jEIcmFUvIuGiJu",
+    phone: "777999777",
     email: "jana@uhk.cz",
   },
   {
     _id: "65f36572e2c4516182b9f872",
     name: "Petr Novák",
     username: "petr",
-    hashedPassword: "$2a$10$6ha2i4qKo6KkTilgxctF3O.K03AyTelTdtcoI.SGQ4o0a96H1mkei",
-    phone: "666666666",
+    hashedPassword:
+      "$2a$10$6ha2i4qKo6KkTilgxctF3O.K03AyTelTdtcoI.SGQ4o0a96H1mkei",
+    phone: "737000737",
     email: "petr@uhk.cz",
+  },
+  {
+    _id: "65fd29f522a9472d00ca8f7f",
+    name: "Honza Lopuch",
+    username: "honza",
+    hashedPassword:
+      "$2a$10$oyTi1iPpapeIU9m27Kt6juVbadIYTomCcRnm0KgaiP03h9Mg5FldG",
+    phone: "608000608",
+    email: "honza@lopuch.cz",
   },
 ];
 

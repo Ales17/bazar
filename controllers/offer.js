@@ -18,7 +18,7 @@ const getOfferByID = async (offerId) => {
 
 const getOffersByAuthor = async (id) => {
   try {
-    const offers = await Offer.find({ author: id }).populate(
+    const offers = await Offer.findOne({ author: id }).populate(
       "author",
       "name phone email"
     );
@@ -33,7 +33,7 @@ offerPage = async (req, res) => {
   const offer = await getOfferByID(req.params.id);
 
   const user = req.user;
-  
+
   if (!offer) {
     res.status(404).render("message", {
       message: "Inzerát s tímto číslem nenalezen.",

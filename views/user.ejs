@@ -6,7 +6,7 @@
     Telefon: <%= user.phone %>
   </div>
 
-  <% if (offers) { %>
+  <% if (locals.offers) { %>
   <h2>Vaše nabídky (včetně soukromých)</h2>
 
   <div class="offers">
@@ -26,7 +26,7 @@
     </div>
     <% }) %>
   </div>
-
-  <% } else { %> Nemáte žádné nabídky <% } %>
+</div> 
+  <% } else { %> <h2>Aktuálně nemáte žádné inzeráty</h2><% } %>
 </div>
 <%- include('partials/footer') %>
