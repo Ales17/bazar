@@ -2,7 +2,7 @@ const Offer = require("../models/offer");
 const user = require("../models/user");
 
 const offer401msg = "Nemáte oprávnění upravovat tento inzerát";
-
+const offer404msg = "Inzerát s tímto číslem nenalezen.";
 // Util
 const getOfferByID = async (offerId) => {
   try {
@@ -34,7 +34,7 @@ offerPage = async (req, res) => {
 
   if (!offer) {
     res.status(404).render("message", {
-      message: "Inzerát s tímto číslem nenalezen.",
+      message: offer404msg,
       user,
     });
   } else {
@@ -47,7 +47,7 @@ editOfferPage = async (req, res) => {
 
   if (!offer) {
     res.status(404).render("message", {
-      message: "Inzerát s tímto číslem nenalezen.",
+      message: offer404msg,
       user,
     });
   } else {
