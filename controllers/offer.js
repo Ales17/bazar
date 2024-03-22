@@ -1,4 +1,3 @@
-const express = require("express");
 const Offer = require("../models/offer");
 const user = require("../models/user");
 
@@ -17,11 +16,16 @@ const getOfferByID = async (offerId) => {
   }
 };
 
-const getOffersByAuthorJson = async (id) => {
-  return await Offer.find({ author: id }).populate(
-    "author",
-    "name phone email"
-  );
+const getOffersByAuthor = async (id) => {
+  try {
+    const offers = await Offer.find({ author: id }).populate(
+      "author",
+      "name phone email"
+    );
+    return offers;
+  } catch (error) {
+    return null;
+  }
 };
 
 // Pages
@@ -29,6 +33,7 @@ offerPage = async (req, res) => {
   const offer = await getOfferByID(req.params.id);
 
   const user = req.user;
+  
   if (!offer) {
     res.status(404).render("message", {
       message: "Inzerát s tímto číslem nenalezen.",
@@ -111,11 +116,6 @@ editOffer = async (req, res) => {
   }
 };
 
-getOfferByAuthor = async (req, res) => {
-  const offers = await getOffersByAuthorJson(req.params.author);
-  res.send(offers);
-};
-
 deleteOfferById = async (req, res) => {
   await Offer.findByIdAndDelete(req.params.id);
   res.redirect("/");
@@ -131,9 +131,8 @@ module.exports = {
   createOffer,
   editOffer,
   editOfferPage,
-  getOfferByAuthor,
   getOfferByIdJson,
-  getOffersByAuthorJson,
+  getOffersByAuthor,
   offerPage,
   deleteOfferById,
 };

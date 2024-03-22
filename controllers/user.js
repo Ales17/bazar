@@ -1,6 +1,6 @@
 const User = require("../models/user");
 const crypto = require("crypto");
-const { getOffersByAuthorJson } = require("./offer");
+const { getOffersByAuthor } = require("./offer");
 const bcrypt = require("bcryptjs");
 
 const authTokens = {};
@@ -37,7 +37,7 @@ loginPage = (req, res) => {
 
 userPage = async (req, res) => {
   const user = req.user;
-  const offers = await getOffersByAuthorJson(req.user.id);
+  const offers = await getOffersByAuthor(req.user.id);
   if (offers) {
     res.render("user", { user, offers });
   } else {
@@ -87,13 +87,16 @@ login = async (req, res) => {
 
   if (user) {
     const compare = bcrypt.compareSync(password, user.hashedPassword);
-    
+
     if (compare) {
       const authToken = generateAuthToken();
       // Store authentication token
       authTokens[authToken] = user;
-
-      res.cookie("tkn", authToken, { httpOnly: true });
+      // Expiration and httOnly for security
+      res.cookie("tkn", authToken, {
+        expires: new Date(Date.now() + 86400000),
+        httpOnly: true,
+      });
 
       res.redirect("/");
     } else {
