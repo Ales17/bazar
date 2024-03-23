@@ -18,7 +18,7 @@
   </select>
 
   <label for="price">Cena</label>
-  <input type="text" name="price" value="<%= offer.price %>" />
+  <input type="number" name="price" min="0" value="<%= offer.price %>" />
 
   <input type="submit" value="Uložit změny" />
 </form>
