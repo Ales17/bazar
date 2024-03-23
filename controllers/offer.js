@@ -1,6 +1,6 @@
 const Offer = require("../models/offer");
 const user = require("../models/user");
-
+// Offer controllers for pages and CRUD
 const offer401msg = "Nemáte oprávnění upravovat tento inzerát";
 const offer404msg = "Inzerát s tímto číslem nenalezen.";
 // Util
@@ -26,7 +26,7 @@ const getOffersByAuthor = async (id) => {
   return offers;
 };
 
-// Pages
+// Pages - GET
 offerPage = async (req, res) => {
   const offer = await getOfferByID(req.params.id);
 
@@ -66,7 +66,7 @@ createOfferPage = (req, res) => {
   const user = req.user;
   res.render("new", { user });
 };
-// CRUD
+// CRUD - POST / PATCH
 createOffer = async (req, res) => {
   const user = req.user;
   const { title, text, price, public } = req.body;

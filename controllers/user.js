@@ -4,13 +4,13 @@ const { getOffersByAuthor } = require("./offer");
 const bcrypt = require("bcryptjs");
 
 const authTokens = {};
-
+// Put user token in requests
 middleware = (req, res, next) => {
   const authToken = req.cookies["tkn"];
   req.user = authTokens[authToken];
   next();
 };
-
+// Require authentication for certain endpoints
 authenticate = (req, res, next) => {
   if (req.user) {
     return next();
@@ -30,7 +30,7 @@ const findUserByUsername = async (username) => {
   });
 };
 
-// GET - pages
+// Pages - GET
 loginPage = (req, res) => {
   res.render("login");
 };
@@ -49,7 +49,7 @@ registerPage = (req, res) => {
   res.render("register");
 };
 
-// POST
+// CRUD - POST 
 createUser = async (req, res) => {
   const { username, name, email, password, password2, phone } = req.body;
 
